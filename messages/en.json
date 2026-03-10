@@ -3,5 +3,22 @@
         "title": "You'll never forget that birthday",
         "subtitle": "Birty is your friendly app that helps you remember the birthdays of your loved ones.",
         "cta": "Get started now"
+    },
+    "Features": {
+        "A": {
+            "title": "Never miss an important birthday again",
+            "subtitle": "Set reminders for the exact day or get notified a few days in advance so you always have time to prepare.",
+            "cta": "Learn more"
+        },
+        "B": {
+            "title": "Simple birthday tracking",
+            "subtitle": "Keep all your friends’ and family’s birthdays organized in one place with an easy and clean interface.",
+            "cta": "Discover more"
+        },
+        "C": {
+            "title": "Friendly email reminders",
+            "subtitle": "Receive gentle email reminders so you can celebrate, send a message, or plan something special on time.",
+            "cta": "Find out how"
+        }
     }
 }

@@ -3,5 +3,22 @@
         "title": "Nunca olvidarás ese cumpleaños",
         "subtitle": "Birty es tu app amigable que te ayuda a recordar los cumpleaños de tus seres queridos.",
         "cta": "Comenzar ahora"
+    },
+    "Features": {
+        "A": {
+            "title": "Nunca pierdas un cumpleaños importante",
+            "subtitle": "Configura recordatorios para el día exacto o recibe notificaciones unos días antes para que siempre tengas tiempo de prepararte.",
+            "cta": "Aprende más"
+        },
+        "B": {
+            "title": "Seguimiento de cumpleaños simple",
+            "subtitle": "Mantén todos los cumpleaños de tus amigos y familiares organizados en un solo lugar con una interfaz fácil y limpia.",
+            "cta": "Descubre más"
+        },
+        "C": {
+            "title": "Recordatorios de cumpleaños amigables",
+            "subtitle": "Recibe recordatorios por correo electrónico para que puedas celebrar, enviar un mensaje o planear algo especial a tiempo.",
+            "cta": "Descubre cómo"
+        }
     }
 }

@@ -33,15 +33,14 @@ export default async function LocaleLayout({
     if (!hasLocale(routing.locales, locale)) notFound()
 
     return (
-        <html lang={locale}>
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-accent`}
-            >
-                <NextIntlClientProvider>
-                    <Header />
-                    {children}
-                </NextIntlClientProvider>
-            </body>
-        </html>
+        <div
+            lang={locale}
+            className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased bg-accent`}
+        >
+            <NextIntlClientProvider>
+                <Header />
+                {children}
+            </NextIntlClientProvider>
+        </div>
     )
 }
