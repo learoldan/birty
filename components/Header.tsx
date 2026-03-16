@@ -6,14 +6,14 @@ import { Link } from '@/i18n/navigation'
 import Button from './Button'
 import LanguageSwitcher from './LanguageSwitcher'
 
-const navLinks = ['Exhibits', 'Contact', 'Blog']
+const navLinks = ['Contact', 'Blog']
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false)
 
     return (
         <header className='w-full bg-transparent absolute top-0 left-0 z-50'>
-            <div className='max-w-7xl mx-auto px-6 py-4 flex items-center'>
+            <div className='max-w-7xl mx-auto p-4 flex items-center gap-4'>
                 {/* Left: nav (desktop) | hamburger (mobile) */}
                 <div className='flex-1 flex items-center gap-2'>
                     <nav className='hidden md:flex items-center gap-2'>
@@ -22,6 +22,7 @@ export default function Header() {
                                 {link}
                             </Button>
                         ))}
+                        <LanguageSwitcher />
                     </nav>
 
                     <button
@@ -45,6 +46,9 @@ export default function Header() {
                             }`}
                         />
                     </button>
+                    <div className='md:hidden'>
+                        <LanguageSwitcher />
+                    </div>
                 </div>
 
                 {/* Center: logo */}
@@ -60,7 +64,6 @@ export default function Header() {
 
                 {/* Right: login button */}
                 <div className='flex-1 flex items-center justify-end gap-3'>
-                    <LanguageSwitcher />
                     <Button variant='secondary'>Login</Button>
                 </div>
             </div>
@@ -81,9 +84,6 @@ export default function Header() {
                             {link}
                         </Button>
                     ))}
-                    <div className='mt-2'>
-                        <LanguageSwitcher className='w-full justify-center' />
-                    </div>
                     <div>
                         <Button variant='secondary' className='w-full'>
                             Login
