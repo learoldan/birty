@@ -1,9 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import { Link } from '@/i18n/navigation'
 import Button from './Button'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const navLinks = ['Exhibits', 'Contact', 'Blog']
 
@@ -58,7 +59,8 @@ export default function Header() {
                 </Link>
 
                 {/* Right: login button */}
-                <div className='flex-1 flex justify-end'>
+                <div className='flex-1 flex items-center justify-end gap-3'>
+                    <LanguageSwitcher />
                     <Button variant='secondary'>Login</Button>
                 </div>
             </div>
@@ -80,6 +82,9 @@ export default function Header() {
                         </Button>
                     ))}
                     <div className='mt-2'>
+                        <LanguageSwitcher className='w-full justify-center' />
+                    </div>
+                    <div>
                         <Button variant='secondary' className='w-full'>
                             Login
                         </Button>

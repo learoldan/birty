@@ -9,16 +9,17 @@ export default function Home() {
             <main className='flex min-h-screen w-full max-w-325 flex-col items-center justify-between py-8 px-4 sm:items-start'>
                 <Hero />
                 <Features
-                    imageSrc='/logo.png'
+                    imageSrc='/reminders.webp'
                     imageAlt='Recordatorios de cumpleaños'
                     title={t('A.title')}
                     subtitle={t('A.subtitle')}
                     cta={t('A.cta')}
                     animation='slide'
                     imagePosition='left'
+                    variant='secondary'
                 />
                 <Features
-                    imageSrc='/logo.png'
+                    imageSrc='/tracking.webp'
                     imageAlt='Seguimiento de cumpleaños'
                     title={t('B.title')}
                     subtitle={t('B.subtitle')}
@@ -27,13 +28,14 @@ export default function Home() {
                     imagePosition='right'
                 />
                 <Features
-                    imageSrc='/logo.png'
+                    imageSrc='/emails.webp'
                     imageAlt='Recordatorios de cumpleaños por correo electrónico'
                     title={t('C.title')}
                     subtitle={t('C.subtitle')}
                     cta={t('C.cta')}
                     animation='zoom'
                     imagePosition='left'
+                    variant='secondary'
                 />
             </main>
         </div>

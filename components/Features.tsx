@@ -14,6 +14,7 @@ type FeaturesProps = {
     cta: string
     animation?: AnimationType
     imagePosition?: 'left' | 'right'
+    variant?: 'primary' | 'secondary'
     onCtaClick?: () => void
 }
 
@@ -53,6 +54,7 @@ export default function Features({
     cta,
     animation = 'slide',
     imagePosition = 'left',
+    variant = 'primary',
     onCtaClick,
 }: FeaturesProps) {
     const sectionRef = useRef<HTMLElement>(null)
@@ -76,6 +78,7 @@ export default function Features({
 
     const imgSide = imagePosition === 'left' ? 'left' : 'right'
     const textSide = imagePosition === 'left' ? 'right' : 'left'
+    const textColor = variant === 'primary' ? 'text-primary' : 'text-secondary'
 
     const imageStyle: CSSProperties = visible
         ? shownStyle
@@ -112,7 +115,9 @@ export default function Features({
                 className={`w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left ${imagePosition === 'right' ? 'lg:order-1' : 'lg:order-2'}`}
                 style={textStyle}
             >
-                <h2 className='mb-4 text-3xl font-extrabold uppercase tracking-tight font-stretch-50% text-primary sm:text-4xl lg:text-5xl'>
+                <h2
+                    className={`mb-4 text-3xl font-extrabold uppercase tracking-tight font-stretch-50% ${textColor} sm:text-4xl lg:text-5xl`}
+                >
                     {title}
                 </h2>
                 <p className='mb-8 max-w-md text-base leading-relaxed sm:text-lg'>
