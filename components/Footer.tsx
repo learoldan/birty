@@ -1,18 +1,21 @@
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
-
-const navLinks = [
-    { label: 'Contact', href: '/contact' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Login', href: '/login' },
-]
-
-const policyLinks = [
-    { label: 'Cookie Policy', href: '/cookie-policy' },
-    { label: 'Privacy Policy', href: '/privacy-policy' },
-]
+import { useTranslations } from 'next-intl'
 
 export default function Footer() {
+    const t = useTranslations('Footer')
+
+    const navLinks = [
+        { label: t('nav.contact'), href: '/contact' },
+        { label: t('nav.blog'), href: '/blog' },
+        { label: t('nav.login'), href: '/login' },
+    ]
+
+    const policyLinks = [
+        { label: t('policies.cookies'), href: '/cookie-policy' },
+        { label: t('policies.privacy'), href: '/privacy-policy' },
+    ]
+
     return (
         <footer className='w-full bg-accent-dark text-terciary mt-16'>
             <div className='mx-auto px-4 py-10'>
@@ -22,7 +25,7 @@ export default function Footer() {
                         <Link href='/'>
                             <Image
                                 src='/logo.png'
-                                alt='Birty logo'
+                                alt={t('logoAlt')}
                                 width={90}
                                 height={36}
                                 className='md:w-32.5 md:h-13'
@@ -35,7 +38,7 @@ export default function Footer() {
                         {/* Navigation */}
                         <div className='flex flex-col gap-3'>
                             <p className='font-semibold text-sm uppercase tracking-widest opacity-60 mb-1'>
-                                Menu
+                                {t('menuTitle')}
                             </p>
                             {navLinks.map((link) => (
                                 <Link
@@ -51,7 +54,7 @@ export default function Footer() {
                         {/* Policies */}
                         <div className='flex flex-col gap-3'>
                             <p className='font-semibold text-sm uppercase tracking-widest opacity-60 mb-1'>
-                                Legal
+                                {t('legalTitle')}
                             </p>
                             {policyLinks.map((link) => (
                                 <Link
@@ -69,7 +72,7 @@ export default function Footer() {
 
             {/* Bottom bar */}
             <div className='border-t border-terciary/20 py-4 text-center text-xs opacity-50'>
-                made by Leandro Roldán
+                {t('madeBy')}
             </div>
         </footer>
     )

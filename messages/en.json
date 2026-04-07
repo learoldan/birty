@@ -20,5 +20,58 @@
             "subtitle": "Receive gentle email reminders so you can celebrate, send a message, or plan something special on time.",
             "cta": "Find out how"
         }
+    },
+    "Login": {
+        "title": "Sign in",
+        "subtitle": "Welcome back! Enter your credentials to continue.",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Sign in",
+        "noAccount": "Don't have an account?",
+        "signUp": "Sign up"
+    },
+    "Register": {
+        "title": "Create account",
+        "subtitle": "Join Birty and never miss a birthday again.",
+        "firstNames": "First name(s)",
+        "lastNames": "Last name(s)",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Sign up",
+        "hasAccount": "Already have an account?",
+        "signIn": "Sign in"
+    },
+    "Contact": {
+        "title": "Contact us",
+        "subtitle": "Have a question or feedback? We'd love to hear from you.",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "messagePlaceholder": "Write your message here...",
+        "submit": "Send message"
+    },
+    "Header": {
+        "logoAlt": "Logo",
+        "toggleMenu": "Toggle menu",
+        "nav": {
+            "contact": "Contact",
+            "blog": "Blog"
+        },
+        "login": "Login"
+    },
+    "Footer": {
+        "logoAlt": "Birty logo",
+        "menuTitle": "Menu",
+        "legalTitle": "Legal",
+        "nav": {
+            "contact": "Contact",
+            "blog": "Blog",
+            "login": "Login"
+        },
+        "policies": {
+            "cookies": "Cookie Policy",
+            "privacy": "Privacy Policy"
+        },
+        "madeBy": "made by Leandro Rold\u00e1n"
     }
 }

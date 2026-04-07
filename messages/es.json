@@ -20,5 +20,58 @@
             "subtitle": "Recibe recordatorios por correo electrónico para que puedas celebrar, enviar un mensaje o planear algo especial a tiempo.",
             "cta": "Descubre cómo"
         }
+    },
+    "Login": {
+        "title": "Iniciar sesión",
+        "subtitle": "¡Bienvenido de nuevo! Ingresa tus credenciales para continuar.",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "submit": "Iniciar sesión",
+        "noAccount": "¿No tenés una cuenta?",
+        "signUp": "Registrarse"
+    },
+    "Register": {
+        "title": "Crear cuenta",
+        "subtitle": "Unite a Birty y nunca olvides un cumpleaños.",
+        "firstNames": "Nombre(s)",
+        "lastNames": "Apellido(s)",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "submit": "Registrarse",
+        "hasAccount": "¿Ya tenés una cuenta?",
+        "signIn": "Iniciar sesión"
+    },
+    "Contact": {
+        "title": "Contáctanos",
+        "subtitle": "¿Tenés alguna pregunta o sugerencia? Nos encanta escucharte.",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "message": "Mensaje",
+        "messagePlaceholder": "Escribí tu mensaje aquí...",
+        "submit": "Enviar mensaje"
+    },
+    "Header": {
+        "logoAlt": "Logo",
+        "toggleMenu": "Abrir men\u00fa",
+        "nav": {
+            "contact": "Contacto",
+            "blog": "Blog"
+        },
+        "login": "Ingresar"
+    },
+    "Footer": {
+        "logoAlt": "Logo de Birty",
+        "menuTitle": "Men\u00fa",
+        "legalTitle": "Legal",
+        "nav": {
+            "contact": "Contacto",
+            "blog": "Blog",
+            "login": "Ingresar"
+        },
+        "policies": {
+            "cookies": "Pol\u00edtica de cookies",
+            "privacy": "Pol\u00edtica de privacidad"
+        },
+        "madeBy": "hecho por Leandro Rold\u00e1n"
     }
 }
