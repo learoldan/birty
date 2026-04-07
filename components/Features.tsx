@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRef, useEffect, useState, CSSProperties } from 'react'
 import Button from './Button'
 
@@ -15,7 +16,7 @@ type FeaturesProps = {
     animation?: AnimationType
     imagePosition?: 'left' | 'right'
     variant?: 'primary' | 'secondary'
-    onCtaClick?: () => void
+    href?: string
 }
 
 function getHiddenStyle(
@@ -55,7 +56,7 @@ export default function Features({
     animation = 'slide',
     imagePosition = 'left',
     variant = 'primary',
-    onCtaClick,
+    href = '/login',
 }: FeaturesProps) {
     const sectionRef = useRef<HTMLElement>(null)
     const [visible, setVisible] = useState(false)
@@ -123,9 +124,9 @@ export default function Features({
                 <p className='mb-8 max-w-md text-base leading-relaxed sm:text-lg'>
                     {subtitle}
                 </p>
-                <Button variant='secondary' onClick={onCtaClick}>
-                    {cta}
-                </Button>
+                <Link href={href}>
+                    <Button variant='secondary'>{cta}</Button>
+                </Link>
             </div>
         </section>
     )
