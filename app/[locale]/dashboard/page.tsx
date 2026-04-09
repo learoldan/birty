@@ -3,12 +3,34 @@
 import { useState } from 'react'
 import EditModal from '@/components/EditModal'
 import ChangePasswordModal from '@/components/ChangePasswordModal'
+import Birthdays from '@/components/Birthdays'
 
 const mockUser = {
     firstName: 'Leandro',
     lastName: 'García',
     email: 'leandro.garcia@example.com',
 }
+
+const mockBirthdays = [
+    {
+        name: 'María López',
+        birthdate: '1990-03-15',
+        notes: 'Loves chocolate cake',
+        alerts: true,
+    },
+    {
+        name: 'Carlos Pérez',
+        birthdate: '1985-07-22',
+        notes: 'Prefers surprises',
+        alerts: false,
+    },
+    {
+        name: 'Ana Martínez',
+        birthdate: '1998-11-05',
+        notes: '',
+        alerts: true,
+    },
+]
 
 type Tab = 'birthdays' | 'alerts'
 
@@ -20,7 +42,11 @@ export default function DashboardPage() {
     return (
         <div className='min-h-screen flex flex-col md:flex-row pt-20'>
             {editOpen && (
-                <EditModal user={mockUser} onClose={() => setEditOpen(false)} />
+                <EditModal
+                    variant='user'
+                    data={mockUser}
+                    onClose={() => setEditOpen(false)}
+                />
             )}
             {changePasswordOpen && (
                 <ChangePasswordModal
@@ -88,7 +114,7 @@ export default function DashboardPage() {
                 {/* Tab content */}
                 <div className='flex-1 p-6'>
                     {activeTab === 'birthdays' && (
-                        <div>{/* Birthdays content goes here */}</div>
+                        <Birthdays birthdays={mockBirthdays} />
                     )}
                     {activeTab === 'alerts' && (
                         <div>{/* Alerts content goes here */}</div>
