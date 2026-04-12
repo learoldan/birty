@@ -1,17 +1,42 @@
 'use client'
 
 import { useState } from 'react'
-import { Link } from '@/i18n/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 
 export default function LoginPage() {
     const t = useTranslations('Login')
+    const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
 
-    function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        // TODO: implement authentication
+        setError(null)
+        setIsLoading(true)
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            })
+
+            const data = await res.json()
+
+            if (!res.ok) {
+                setError(data.message || 'Authentication failed')
+                return
+            }
+
+            router.push('/dashboard')
+        } catch {
+            setError('An unexpected error occurred. Please try again.')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -23,6 +48,12 @@ export default function LoginPage() {
                 <p className='text-terciary/60 text-sm text-center mb-8'>
                     {t('subtitle')}
                 </p>
+
+                {error && (
+                    <p className='mb-4 rounded-xl bg-red-500/10 px-4 py-2.5 text-center text-sm text-red-400'>
+                        {error}
+                    </p>
+                )}
 
                 <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
                     <div className='flex flex-col gap-1.5'>
@@ -65,9 +96,10 @@ export default function LoginPage() {
 
                     <button
                         type='submit'
-                        className='mt-2 w-full rounded-full px-5 py-2.5 bg-terciary text-black font-semibold text-sm tracking-wide hover:bg-black hover:text-terciary transition-all duration-300 cursor-pointer'
+                        disabled={isLoading}
+                        className='mt-2 w-full rounded-full px-5 py-2.5 bg-terciary text-black font-semibold text-sm tracking-wide hover:bg-black hover:text-terciary transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                     >
-                        {t('submit')}
+                        {isLoading ? '...' : t('submit')}
                     </button>
                 </form>
 
