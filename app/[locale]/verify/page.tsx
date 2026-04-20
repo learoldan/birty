@@ -1,16 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
-import { useAuth } from '@/contexts/AuthContext'
 
-export default function LoginPage() {
-    const t = useTranslations('Login')
+export default function VerifyPage() {
+    const t = useTranslations('Verify')
     const router = useRouter()
-    const { refresh } = useAuth()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const searchParams = useSearchParams()
+    const email = searchParams.get('email') ?? ''
+
+    const [code, setCode] = useState('')
     const [error, setError] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState(false)
 
@@ -20,21 +21,20 @@ export default function LoginPage() {
         setIsLoading(true)
 
         try {
-            const res = await fetch('/api/auth/login', {
+            const res = await fetch('/api/auth/validate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, confirmationCode: code }),
             })
 
             const data = await res.json()
 
             if (!res.ok) {
-                setError(data.message || 'Authentication failed')
+                setError(data.message || 'Verification failed')
                 return
             }
 
-            await refresh()
-            router.push('/dashboard')
+            router.push('/login')
         } catch {
             setError('An unexpected error occurred. Please try again.')
         } finally {
@@ -48,9 +48,14 @@ export default function LoginPage() {
                 <h1 className='text-3xl font-bold text-terciary mb-2 text-center'>
                     {t('title')}
                 </h1>
-                <p className='text-terciary/60 text-sm text-center mb-8'>
+                <p className='text-terciary/60 text-sm text-center mb-2'>
                     {t('subtitle')}
                 </p>
+                {email && (
+                    <p className='text-terciary font-medium text-sm text-center mb-8'>
+                        {email}
+                    </p>
+                )}
 
                 {error && (
                     <p className='mb-4 rounded-xl bg-red-500/10 px-4 py-2.5 text-center text-sm text-red-400'>
@@ -61,39 +66,21 @@ export default function LoginPage() {
                 <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
                     <div className='flex flex-col gap-1.5'>
                         <label
-                            htmlFor='email'
+                            htmlFor='code'
                             className='text-sm font-medium text-terciary/80'
                         >
-                            {t('email')}
+                            {t('code')}
                         </label>
                         <input
-                            id='email'
-                            type='email'
-                            autoComplete='email'
+                            id='code'
+                            type='text'
+                            inputMode='numeric'
+                            autoComplete='one-time-code'
                             required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder='you@example.com'
-                            className='w-full rounded-full px-5 py-2.5 bg-accent-dark text-terciary placeholder:text-terciary/30 border border-terciary/20 focus:outline-none focus:border-terciary/60 text-sm transition-colors duration-200'
-                        />
-                    </div>
-
-                    <div className='flex flex-col gap-1.5'>
-                        <label
-                            htmlFor='password'
-                            className='text-sm font-medium text-terciary/80'
-                        >
-                            {t('password')}
-                        </label>
-                        <input
-                            id='password'
-                            type='password'
-                            autoComplete='current-password'
-                            required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder='••••••••'
-                            className='w-full rounded-full px-5 py-2.5 bg-accent-dark text-terciary placeholder:text-terciary/30 border border-terciary/20 focus:outline-none focus:border-terciary/60 text-sm transition-colors duration-200'
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                            placeholder='123456'
+                            className='w-full rounded-full px-5 py-2.5 bg-accent-dark text-terciary placeholder:text-terciary/30 border border-terciary/20 focus:outline-none focus:border-terciary/60 text-sm transition-colors duration-200 tracking-widest text-center'
                         />
                     </div>
 
@@ -107,12 +94,12 @@ export default function LoginPage() {
                 </form>
 
                 <p className='mt-6 text-center text-sm text-terciary/60'>
-                    {t('noAccount')}{' '}
+                    {t('hasAccount')}{' '}
                     <Link
-                        href='/register'
+                        href='/login'
                         className='text-terciary font-medium hover:opacity-70 transition-opacity duration-200 underline underline-offset-2'
                     >
-                        {t('signUp')}
+                        {t('signIn')}
                     </Link>
                 </p>
             </div>

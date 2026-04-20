@@ -30,6 +30,14 @@
         "noAccount": "¿No tenés una cuenta?",
         "signUp": "Registrarse"
     },
+    "Verify": {
+        "title": "Revisá tu correo",
+        "subtitle": "Te enviamos un código de verificación a",
+        "code": "Código de verificación",
+        "submit": "Verificar email",
+        "hasAccount": "¿Ya tenés una cuenta?",
+        "signIn": "Iniciar sesión"
+    },
     "Register": {
         "title": "Crear cuenta",
         "subtitle": "Unite a Birty y nunca olvides un cumpleaños.",
@@ -57,7 +65,9 @@
             "contact": "Contacto",
             "blog": "Blog"
         },
-        "login": "Ingresar"
+        "login": "Ingresar",
+        "dashboard": "Dashboard",
+        "logout": "Cerrar sesión"
     },
     "Footer": {
         "logoAlt": "Logo de Birty",

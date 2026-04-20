@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { buildSessionResponse } from '@/lib/auth/session'
 
 export async function POST(request: NextRequest) {
     const body = await request.json()
@@ -25,24 +26,7 @@ export async function POST(request: NextRequest) {
         )
     }
 
-    const { accessToken, idToken, refreshToken } = await backendRes.json()
+    const { data: { accessToken, idToken, refreshToken } } = await backendRes.json()
 
-    const response = NextResponse.json({ success: true })
-
-    const isProduction = process.env.NODE_ENV === 'production'
-    const cookieBase = {
-        httpOnly: true,
-        secure: isProduction,
-        sameSite: 'strict' as const,
-        path: '/',
-    }
-
-    response.cookies.set('access_token', accessToken, cookieBase)
-    response.cookies.set('id_token', idToken, cookieBase)
-    response.cookies.set('refresh_token', refreshToken, {
-        ...cookieBase,
-        maxAge: 60 * 60 * 24 * 30, // 30 days
-    })
-
-    return response
+    return buildSessionResponse({ accessToken, idToken, refreshToken })
 }

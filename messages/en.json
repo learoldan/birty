@@ -30,6 +30,14 @@
         "noAccount": "Don't have an account?",
         "signUp": "Sign up"
     },
+    "Verify": {
+        "title": "Check your email",
+        "subtitle": "We sent a verification code to",
+        "code": "Verification code",
+        "submit": "Verify email",
+        "hasAccount": "Already have an account?",
+        "signIn": "Sign in"
+    },
     "Register": {
         "title": "Create account",
         "subtitle": "Join Birty and never miss a birthday again.",
@@ -57,7 +65,9 @@
             "contact": "Contact",
             "blog": "Blog"
         },
-        "login": "Login"
+        "login": "Login",
+        "dashboard": "Dashboard",
+        "logout": "Log out"
     },
     "Footer": {
         "logoAlt": "Birty logo",

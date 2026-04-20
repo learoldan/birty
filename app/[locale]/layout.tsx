@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import { AuthProvider } from '@/contexts/AuthContext'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import '../globals.css'
@@ -39,9 +40,11 @@ export default async function LocaleLayout({
             className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased bg-accent`}
         >
             <NextIntlClientProvider>
-                <Header />
-                {children}
-                <Footer />
+                <AuthProvider>
+                    <Header />
+                    {children}
+                    <Footer />
+                </AuthProvider>
             </NextIntlClientProvider>
         </div>
     )

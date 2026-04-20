@@ -1,20 +1,44 @@
 'use client'
 
 import { useState } from 'react'
-import { Link } from '@/i18n/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 
 export default function RegisterPage() {
     const t = useTranslations('Register')
+    const router = useRouter()
     const [firstNames, setFirstNames] = useState('')
     const [lastNames, setLastNames] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
 
-    function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        // TODO: implement registration
-        // payload: { firstNames, lastNames, email, password }
+        setError(null)
+        setIsLoading(true)
+
+        try {
+            const registerRes = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ firstNames, lastNames, email, password }),
+            })
+
+            const registerData = await registerRes.json()
+
+            if (!registerRes.ok) {
+                setError(registerData.message || 'Registration failed')
+                return
+            }
+
+            router.push(`/verify?email=${encodeURIComponent(email)}`)
+        } catch {
+            setError('An unexpected error occurred. Please try again.')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -26,6 +50,12 @@ export default function RegisterPage() {
                 <p className='text-terciary/60 text-sm text-center mb-8'>
                     {t('subtitle')}
                 </p>
+
+                {error && (
+                    <p className='mb-4 rounded-xl bg-red-500/10 px-4 py-2.5 text-center text-sm text-red-400'>
+                        {error}
+                    </p>
+                )}
 
                 <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
                     <div className='flex flex-col gap-1.5'>
@@ -104,9 +134,10 @@ export default function RegisterPage() {
 
                     <button
                         type='submit'
-                        className='mt-2 w-full rounded-full px-5 py-2.5 bg-terciary text-black font-semibold text-sm tracking-wide hover:bg-black hover:text-terciary transition-all duration-300 cursor-pointer'
+                        disabled={isLoading}
+                        className='mt-2 w-full rounded-full px-5 py-2.5 bg-terciary text-black font-semibold text-sm tracking-wide hover:bg-black hover:text-terciary transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                     >
-                        {t('submit')}
+                        {isLoading ? '...' : t('submit')}
                     </button>
                 </form>
 
