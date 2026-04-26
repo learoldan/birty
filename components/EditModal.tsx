@@ -15,7 +15,12 @@ type BirthdayData = {
 }
 
 type EditModalProps =
-    | { variant: 'user'; data: UserData; onClose: () => void }
+    | {
+          variant: 'user'
+          data: UserData
+          onClose: () => void
+          onSave: (data: UserData) => Promise<void>
+      }
     | { variant: 'birthday'; data: BirthdayData; onClose: () => void }
 
 const inputClass =
@@ -25,6 +30,8 @@ export default function EditModal(props: EditModalProps) {
     const { variant, data, onClose } = props
 
     const [form, setForm] = useState({ ...data })
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [error, setError] = useState<string | null>(null)
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -32,9 +39,26 @@ export default function EditModal(props: EditModalProps) {
         setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        onClose()
+        if (variant === 'user') {
+            setIsSubmitting(true)
+            setError(null)
+            try {
+                await (
+                    props as Extract<EditModalProps, { variant: 'user' }>
+                ).onSave(form as UserData)
+                onClose()
+            } catch (err) {
+                setError(
+                    err instanceof Error ? err.message : 'Something went wrong',
+                )
+            } finally {
+                setIsSubmitting(false)
+            }
+        } else {
+            onClose()
+        }
     }
 
     return (
@@ -133,18 +157,25 @@ export default function EditModal(props: EditModalProps) {
                     )}
 
                     <div className='flex justify-end gap-3 mt-2'>
+                        {error && (
+                            <p className='text-sm text-red-400 self-center mr-auto'>
+                                {error}
+                            </p>
+                        )}
                         <button
                             type='button'
                             onClick={onClose}
-                            className='px-5 py-2 rounded-full text-sm font-medium bg-primary/20 text-primary hover:bg-primary/30 transition-colors duration-200 cursor-pointer'
+                            disabled={isSubmitting}
+                            className='px-5 py-2 rounded-full text-sm font-medium bg-primary/20 text-primary hover:bg-primary/30 transition-colors duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                         >
                             Cancel
                         </button>
                         <button
                             type='submit'
-                            className='px-5 py-2 rounded-full text-sm font-medium bg-primary text-accent hover:bg-primary/80 transition-colors duration-200 cursor-pointer'
+                            disabled={isSubmitting}
+                            className='px-5 py-2 rounded-full text-sm font-medium bg-primary text-accent hover:bg-primary/80 transition-colors duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                         >
-                            Save
+                            {isSubmitting ? 'Saving…' : 'Save'}
                         </button>
                     </div>
                 </form>

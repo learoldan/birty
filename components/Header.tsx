@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { Link } from '@/i18n/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import Button from './Button'
 import LanguageSwitcher from './LanguageSwitcher'
 import { useTranslations } from 'next-intl'
@@ -11,6 +11,7 @@ import { useAuth } from '@/contexts/AuthContext'
 export default function Header() {
     const t = useTranslations('Header')
     const { user, isAuthenticated, isLoading, logout } = useAuth()
+    const router = useRouter()
     const [menuOpen, setMenuOpen] = useState(false)
     const [userMenuOpen, setUserMenuOpen] = useState(false)
 
@@ -76,11 +77,13 @@ export default function Header() {
 
                 {/* Right: login button or user menu */}
                 <div className='flex-1 flex items-center justify-end gap-3'>
-                    {!isLoading && (
-                        isAuthenticated ? (
+                    {!isLoading &&
+                        (isAuthenticated ? (
                             <div className='relative'>
                                 <button
-                                    onClick={() => setUserMenuOpen((prev) => !prev)}
+                                    onClick={() =>
+                                        setUserMenuOpen((prev) => !prev)
+                                    }
                                     className='w-9 h-9 rounded-full bg-terciary text-black flex items-center justify-center text-sm font-bold tracking-wide cursor-pointer'
                                     aria-label='User menu'
                                 >
@@ -90,12 +93,16 @@ export default function Header() {
                                     <>
                                         <div
                                             className='fixed inset-0 z-40'
-                                            onClick={() => setUserMenuOpen(false)}
+                                            onClick={() =>
+                                                setUserMenuOpen(false)
+                                            }
                                         />
                                         <div className='absolute right-0 mt-2 w-44 rounded-2xl bg-accent-dark border border-terciary/10 shadow-lg z-50 overflow-hidden'>
                                             <Link
                                                 href='/dashboard'
-                                                onClick={() => setUserMenuOpen(false)}
+                                                onClick={() =>
+                                                    setUserMenuOpen(false)
+                                                }
                                                 className='block px-4 py-2.5 text-sm text-terciary/80 hover:bg-terciary/10 transition-colors duration-150'
                                             >
                                                 {t('dashboard')}
@@ -104,6 +111,7 @@ export default function Header() {
                                                 onClick={async () => {
                                                     setUserMenuOpen(false)
                                                     await logout()
+                                                    router.push('/')
                                                 }}
                                                 className='w-full text-left px-4 py-2.5 text-sm text-red-400 hover:bg-terciary/10 transition-colors duration-150 cursor-pointer'
                                             >
@@ -115,10 +123,11 @@ export default function Header() {
                             </div>
                         ) : (
                             <Link href='/login'>
-                                <Button variant='secondary'>{t('login')}</Button>
+                                <Button variant='secondary'>
+                                    {t('login')}
+                                </Button>
                             </Link>
-                        )
-                    )}
+                        ))}
                 </div>
             </div>
 
@@ -140,11 +149,14 @@ export default function Header() {
                         </Link>
                     ))}
                     <div>
-                        {!isLoading && (
-                            isAuthenticated ? (
+                        {!isLoading &&
+                            (isAuthenticated ? (
                                 <div className='flex flex-col gap-1'>
                                     <Link href='/dashboard'>
-                                        <Button variant='primary' className='w-full text-left'>
+                                        <Button
+                                            variant='primary'
+                                            className='w-full text-left'
+                                        >
                                             {t('dashboard')}
                                         </Button>
                                     </Link>
@@ -152,6 +164,7 @@ export default function Header() {
                                         onClick={async () => {
                                             setMenuOpen(false)
                                             await logout()
+                                            router.push('/')
                                         }}
                                         className='w-full text-left px-4 py-2 text-sm text-red-400 hover:opacity-70 transition-opacity duration-200 cursor-pointer'
                                     >
@@ -160,12 +173,14 @@ export default function Header() {
                                 </div>
                             ) : (
                                 <Link href='/login'>
-                                    <Button variant='secondary' className='w-full'>
+                                    <Button
+                                        variant='secondary'
+                                        className='w-full'
+                                    >
                                         {t('login')}
                                     </Button>
                                 </Link>
-                            )
-                        )}
+                            ))}
                     </div>
                 </nav>
             </div>

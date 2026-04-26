@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
+import PasswordInput from '@/components/PasswordInput'
 
 export default function RegisterPage() {
     const t = useTranslations('Register')
@@ -23,7 +24,12 @@ export default function RegisterPage() {
             const registerRes = await fetch('/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ firstNames, lastNames, email, password }),
+                body: JSON.stringify({
+                    firstNames,
+                    lastNames,
+                    email,
+                    password,
+                }),
             })
 
             const registerData = await registerRes.json()
@@ -120,9 +126,8 @@ export default function RegisterPage() {
                         >
                             {t('password')}
                         </label>
-                        <input
+                        <PasswordInput
                             id='password'
-                            type='password'
                             autoComplete='new-password'
                             required
                             value={password}

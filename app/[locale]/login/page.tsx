@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
+import PasswordInput from '@/components/PasswordInput'
 
 export default function LoginPage() {
     const t = useTranslations('Login')
@@ -85,9 +86,8 @@ export default function LoginPage() {
                         >
                             {t('password')}
                         </label>
-                        <input
+                        <PasswordInput
                             id='password'
-                            type='password'
                             autoComplete='current-password'
                             required
                             value={password}
