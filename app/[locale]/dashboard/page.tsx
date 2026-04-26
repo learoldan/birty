@@ -6,27 +6,6 @@ import ChangePasswordModal from '@/components/ChangePasswordModal'
 import Birthdays from '@/components/Birthdays'
 import { useAuth } from '@/contexts/AuthContext'
 
-const mockBirthdays = [
-    {
-        name: 'María López',
-        birthdate: '1990-03-15',
-        notes: 'Loves chocolate cake',
-        alerts: true,
-    },
-    {
-        name: 'Carlos Pérez',
-        birthdate: '1985-07-22',
-        notes: 'Prefers surprises',
-        alerts: false,
-    },
-    {
-        name: 'Ana Martínez',
-        birthdate: '1998-11-05',
-        notes: '',
-        alerts: true,
-    },
-]
-
 type Tab = 'birthdays' | 'alerts'
 
 export default function DashboardPage() {
@@ -152,9 +131,7 @@ export default function DashboardPage() {
 
                 {/* Tab content */}
                 <div className='flex-1 p-6'>
-                    {activeTab === 'birthdays' && (
-                        <Birthdays birthdays={mockBirthdays} />
-                    )}
+                    {activeTab === 'birthdays' && <Birthdays />}
                     {activeTab === 'alerts' && (
                         <div>{/* Alerts content goes here */}</div>
                     )}
