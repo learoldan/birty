@@ -7,9 +7,9 @@ import CreateBirthdayModal from './CreateBirthdayModal'
 type Birthday = {
     id: string
     name: string
-    birthdate: string
-    notes: string
-    alerts: boolean
+    birthDate: string
+    notes?: string
+    alerts: string[]
 }
 
 export default function Birthdays() {
@@ -20,6 +20,18 @@ export default function Birthdays() {
         null,
     )
     const [createOpen, setCreateOpen] = useState(false)
+
+    const handleDelete = async (id: string) => {
+        try {
+            const res = await fetch(`/api/birthdays/${id}`, {
+                method: 'DELETE',
+            })
+            if (!res.ok) throw new Error('Failed to delete birthday')
+            loadBirthdays()
+        } catch {
+            setError('Could not delete birthday')
+        }
+    }
 
     const loadBirthdays = useCallback(async () => {
         setIsLoading(true)
@@ -51,12 +63,18 @@ export default function Birthdays() {
             {editingBirthday && (
                 <EditModal
                     variant='birthday'
+                    id={editingBirthday.id}
                     data={{
                         name: editingBirthday.name,
-                        birthdate: editingBirthday.birthdate,
-                        notes: editingBirthday.notes,
+                        birthDate: editingBirthday.birthDate,
+                        notes: editingBirthday.notes ?? '',
+                        alerts: editingBirthday.alerts,
                     }}
                     onClose={() => setEditingBirthday(null)}
+                    onSaved={() => {
+                        setEditingBirthday(null)
+                        loadBirthdays()
+                    }}
                 />
             )}
 
@@ -111,7 +129,7 @@ export default function Birthdays() {
                                         {birthday.name}
                                     </td>
                                     <td className='py-3 pr-6'>
-                                        {birthday.birthdate}
+                                        {birthday.birthDate}
                                     </td>
                                     <td className='py-3 pr-6 text-terciary/70'>
                                         {birthday.notes}
@@ -126,7 +144,12 @@ export default function Birthdays() {
                                             >
                                                 Edit
                                             </button>
-                                            <button className='px-3 py-1 text-xs font-medium rounded-full bg-secondary/20 text-secondary hover:bg-secondary hover:text-accent transition-colors duration-200 cursor-pointer'>
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(birthday.id)
+                                                }
+                                                className='px-3 py-1 text-xs font-medium rounded-full bg-secondary/20 text-secondary hover:bg-secondary hover:text-accent transition-colors duration-200 cursor-pointer'
+                                            >
                                                 Delete
                                             </button>
                                         </div>

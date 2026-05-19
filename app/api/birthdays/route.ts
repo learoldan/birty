@@ -11,6 +11,7 @@ export async function GET() {
 
     const backendRes = await fetch(`${process.env.API_BASE_URL}/birthdays`, {
         headers: { Authorization: `Bearer ${accessToken}` },
+        cache: 'no-store',
     })
 
     if (!backendRes.ok) {
@@ -20,7 +21,7 @@ export async function GET() {
         )
     }
 
-    const { data: birthdays } = await backendRes.json()
+    const { birthdays } = await backendRes.json()
     return NextResponse.json({ birthdays })
 }
 
