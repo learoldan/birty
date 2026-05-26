@@ -3,13 +3,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import EditModal from './EditModal'
 import CreateBirthdayModal from './CreateBirthdayModal'
+import AlertsModal from './AlertsModal'
+import toast from 'react-hot-toast'
 
 type Birthday = {
     id: string
     name: string
     birthDate: string
     notes?: string
-    alerts: string[]
 }
 
 export default function Birthdays() {
@@ -20,16 +21,24 @@ export default function Birthdays() {
         null,
     )
     const [createOpen, setCreateOpen] = useState(false)
+    const [alertingBirthday, setAlertingBirthday] = useState<Birthday | null>(
+        null,
+    )
+    const [deletingId, setDeletingId] = useState<string | null>(null)
 
     const handleDelete = async (id: string) => {
+        setDeletingId(id)
         try {
             const res = await fetch(`/api/birthdays/${id}`, {
                 method: 'DELETE',
             })
             if (!res.ok) throw new Error('Failed to delete birthday')
+            toast.success('Birthday deleted')
             loadBirthdays()
         } catch {
-            setError('Could not delete birthday')
+            toast.error('Could not delete birthday')
+        } finally {
+            setDeletingId(null)
         }
     }
 
@@ -57,7 +66,16 @@ export default function Birthdays() {
             {createOpen && (
                 <CreateBirthdayModal
                     onClose={() => setCreateOpen(false)}
-                    onCreated={loadBirthdays}
+                    onCreated={() => {
+                        toast.success('Birthday created')
+                        loadBirthdays()
+                    }}
+                />
+            )}
+            {alertingBirthday && (
+                <AlertsModal
+                    birthday={alertingBirthday}
+                    onClose={() => setAlertingBirthday(null)}
                 />
             )}
             {editingBirthday && (
@@ -68,10 +86,11 @@ export default function Birthdays() {
                         name: editingBirthday.name,
                         birthDate: editingBirthday.birthDate,
                         notes: editingBirthday.notes ?? '',
-                        alerts: editingBirthday.alerts,
+                        alerts: [],
                     }}
                     onClose={() => setEditingBirthday(null)}
                     onSaved={() => {
+                        toast.success('Birthday updated')
                         setEditingBirthday(null)
                         loadBirthdays()
                     }}
@@ -138,6 +157,16 @@ export default function Birthdays() {
                                         <div className='flex gap-2 justify-end'>
                                             <button
                                                 onClick={() =>
+                                                    setAlertingBirthday(
+                                                        birthday,
+                                                    )
+                                                }
+                                                className='px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-accent transition-colors duration-200 cursor-pointer'
+                                            >
+                                                Alerts
+                                            </button>
+                                            <button
+                                                onClick={() =>
                                                     setEditingBirthday(birthday)
                                                 }
                                                 className='px-3 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary hover:bg-primary hover:text-accent transition-colors duration-200 cursor-pointer'
@@ -148,8 +177,33 @@ export default function Birthdays() {
                                                 onClick={() =>
                                                     handleDelete(birthday.id)
                                                 }
-                                                className='px-3 py-1 text-xs font-medium rounded-full bg-secondary/20 text-secondary hover:bg-secondary hover:text-accent transition-colors duration-200 cursor-pointer'
+                                                disabled={
+                                                    deletingId === birthday.id
+                                                }
+                                                className='px-3 py-1 text-xs font-medium rounded-full bg-secondary/20 text-secondary hover:bg-secondary hover:text-accent transition-colors duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-1.5'
                                             >
+                                                {deletingId === birthday.id && (
+                                                    <svg
+                                                        className='animate-spin h-3 w-3'
+                                                        xmlns='http://www.w3.org/2000/svg'
+                                                        fill='none'
+                                                        viewBox='0 0 24 24'
+                                                    >
+                                                        <circle
+                                                            className='opacity-25'
+                                                            cx='12'
+                                                            cy='12'
+                                                            r='10'
+                                                            stroke='currentColor'
+                                                            strokeWidth='4'
+                                                        />
+                                                        <path
+                                                            className='opacity-75'
+                                                            fill='currentColor'
+                                                            d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z'
+                                                        />
+                                                    </svg>
+                                                )}
                                                 Delete
                                             </button>
                                         </div>

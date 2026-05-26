@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
-export async function PATCH(
+export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> },
 ) {
@@ -15,20 +15,39 @@ export async function PATCH(
     const { id } = await params
     const body = await request.json()
 
-    const backendRes = await fetch(
-        `${process.env.API_BASE_URL}/birthdays/${id}`,
-        {
-            method: 'PATCH',
+    const targetUrl = `${process.env.API_BASE_URL}/birthdays/${id}`
+    console.log(
+        '[PUT /api/birthdays/[id]] url:',
+        targetUrl,
+        'body:',
+        JSON.stringify(body),
+    )
+
+    let backendRes: Response
+    try {
+        backendRes = await fetch(targetUrl, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify(body),
-        },
-    )
+        })
+    } catch (err) {
+        console.error('[PUT /api/birthdays/[id]] fetch error:', err)
+        return NextResponse.json(
+            { message: 'Failed to reach backend' },
+            { status: 502 },
+        )
+    }
 
     if (!backendRes.ok) {
         const error = await backendRes.json().catch(() => ({}))
+        console.error(
+            '[PUT /api/birthdays/[id]] backend error:',
+            backendRes.status,
+            error,
+        )
         return NextResponse.json(
             { message: error.message || 'Failed to update birthday' },
             { status: backendRes.status },

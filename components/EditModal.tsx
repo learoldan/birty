@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import MonthDayInput from './MonthDayInput'
+import toast from 'react-hot-toast'
 
 type UserData = {
     firstName: string
@@ -71,11 +72,13 @@ export default function EditModal(props: EditModalProps) {
                 await (
                     props as Extract<EditModalProps, { variant: 'user' }>
                 ).onSave(form as UserData)
+                toast.success('Profile updated')
                 onClose()
             } catch (err) {
-                setError(
-                    err instanceof Error ? err.message : 'Something went wrong',
-                )
+                const msg =
+                    err instanceof Error ? err.message : 'Something went wrong'
+                setError(msg)
+                toast.error(msg)
             } finally {
                 setIsSubmitting(false)
             }
@@ -87,7 +90,7 @@ export default function EditModal(props: EditModalProps) {
                     { variant: 'birthday' }
                 >
                 const res = await fetch(`/api/birthdays/${id}`, {
-                    method: 'PATCH',
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         name: birthdayForm.name,
@@ -103,9 +106,10 @@ export default function EditModal(props: EditModalProps) {
                 onSaved()
                 onClose()
             } catch (err) {
-                setError(
-                    err instanceof Error ? err.message : 'Something went wrong',
-                )
+                const msg =
+                    err instanceof Error ? err.message : 'Something went wrong'
+                setError(msg)
+                toast.error(msg)
             } finally {
                 setIsSubmitting(false)
             }

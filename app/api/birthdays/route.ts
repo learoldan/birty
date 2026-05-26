@@ -22,7 +22,11 @@ export async function GET() {
     }
 
     const { birthdays } = await backendRes.json()
-    return NextResponse.json({ birthdays })
+    const normalized = birthdays?.map((b: Record<string, unknown>) => ({
+        ...b,
+        id: b.id ?? b._id,
+    }))
+    return NextResponse.json({ birthdays: normalized })
 }
 
 export async function POST(request: NextRequest) {

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import MonthDayInput from './MonthDayInput'
+import toast from 'react-hot-toast'
 
 type CreateBirthdayModalProps = {
     onClose: () => void
@@ -23,7 +24,6 @@ export default function CreateBirthdayModal({
         birthDate: '',
         notes: '',
     })
-    const [alerts, setAlerts] = useState<string[]>([])
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -32,18 +32,6 @@ export default function CreateBirthdayModal({
     ) => {
         const { name, value } = e.target
         setForm((prev) => ({ ...prev, [name]: value }))
-    }
-
-    const addAlert = () => {
-        if (alerts.length < 2) setAlerts((prev) => [...prev, ''])
-    }
-
-    const removeAlert = (index: number) => {
-        setAlerts((prev) => prev.filter((_, i) => i !== index))
-    }
-
-    const handleAlertChange = (index: number, value: string) => {
-        setAlerts((prev) => prev.map((a, i) => (i === index ? value : a)))
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -59,7 +47,6 @@ export default function CreateBirthdayModal({
                     name: form.name,
                     birthDate: form.birthDate,
                     notes: form.notes,
-                    alerts: alerts.filter((a) => a.length > 0),
                 }),
             })
 
@@ -71,9 +58,10 @@ export default function CreateBirthdayModal({
             onCreated()
             onClose()
         } catch (err) {
-            setError(
-                err instanceof Error ? err.message : 'Something went wrong',
-            )
+            const msg =
+                err instanceof Error ? err.message : 'Something went wrong'
+            setError(msg)
+            toast.error(msg)
         } finally {
             setIsSubmitting(false)
         }
@@ -127,43 +115,6 @@ export default function CreateBirthdayModal({
                             onChange={handleChange}
                             className='w-full rounded-2xl px-5 py-2.5 bg-accent text-terciary border border-terciary/20 focus:outline-none focus:border-terciary/60 text-sm transition-colors duration-200 resize-none'
                         />
-                    </div>
-                    <div className='flex flex-col gap-1.5'>
-                        <div className='flex items-center justify-between'>
-                            <label className='text-sm font-medium text-terciary/80'>
-                                Alerts
-                            </label>
-                            {alerts.length < 2 && (
-                                <button
-                                    type='button'
-                                    onClick={addAlert}
-                                    className='text-xs text-primary hover:text-primary/80 transition-colors duration-200 cursor-pointer'
-                                >
-                                    + Add alert
-                                </button>
-                            )}
-                        </div>
-                        {alerts.map((alert, index) => (
-                            <div
-                                key={index}
-                                className='flex gap-2 items-center'
-                            >
-                                <MonthDayInput
-                                    value={alert}
-                                    onChange={(v) =>
-                                        handleAlertChange(index, v)
-                                    }
-                                    className={monthDayClass}
-                                />
-                                <button
-                                    type='button'
-                                    onClick={() => removeAlert(index)}
-                                    className='text-xs text-secondary hover:text-secondary/80 transition-colors duration-200 cursor-pointer shrink-0'
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        ))}
                     </div>
 
                     <div className='flex justify-end gap-3 mt-2'>

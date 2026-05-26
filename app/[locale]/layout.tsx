@@ -7,6 +7,7 @@ import { routing } from '@/i18n/routing'
 import { AuthProvider } from '@/contexts/AuthContext'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { Toaster } from 'react-hot-toast'
 import '../globals.css'
 
 const geistSans = Geist({
@@ -41,6 +42,7 @@ export default async function LocaleLayout({
         >
             <NextIntlClientProvider>
                 <AuthProvider>
+                    <Toaster position='top-right' />
                     <Header />
                     {children}
                     <Footer />

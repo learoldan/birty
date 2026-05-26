@@ -6,11 +6,8 @@ import ChangePasswordModal from '@/components/ChangePasswordModal'
 import Birthdays from '@/components/Birthdays'
 import { useAuth } from '@/contexts/AuthContext'
 
-type Tab = 'birthdays' | 'alerts'
-
 export default function DashboardPage() {
     const { user, isLoading, refresh } = useAuth()
-    const [activeTab, setActiveTab] = useState<Tab>('birthdays')
     const [editOpen, setEditOpen] = useState(false)
     const [changePasswordOpen, setChangePasswordOpen] = useState(false)
 
@@ -105,36 +102,8 @@ export default function DashboardPage() {
 
             {/* Main content */}
             <main className='flex-1 flex flex-col'>
-                {/* Tabs */}
-                <div className='flex border-b border-primary/30'>
-                    <button
-                        onClick={() => setActiveTab('birthdays')}
-                        className={`flex-1 md:flex-none px-6 py-4 text-sm font-medium tracking-wide transition-colors duration-200 cursor-pointer border-b-2 ${
-                            activeTab === 'birthdays'
-                                ? 'border-primary text-primary'
-                                : 'border-transparent text-terciary/60 hover:text-terciary'
-                        }`}
-                    >
-                        Birthdays
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('alerts')}
-                        className={`flex-1 md:flex-none px-6 py-4 text-sm font-medium tracking-wide transition-colors duration-200 cursor-pointer border-b-2 ${
-                            activeTab === 'alerts'
-                                ? 'border-primary text-primary'
-                                : 'border-transparent text-terciary/60 hover:text-terciary'
-                        }`}
-                    >
-                        Alerts
-                    </button>
-                </div>
-
-                {/* Tab content */}
                 <div className='flex-1 p-6'>
-                    {activeTab === 'birthdays' && <Birthdays />}
-                    {activeTab === 'alerts' && (
-                        <div>{/* Alerts content goes here */}</div>
-                    )}
+                    <Birthdays />
                 </div>
             </main>
         </div>

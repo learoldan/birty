@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import PasswordInput from '@/components/PasswordInput'
+import toast from 'react-hot-toast'
 
 type ChangePasswordModalProps = {
     onClose: () => void
@@ -47,11 +48,13 @@ export default function ChangePasswordModal({
                 throw new Error(message || 'Failed to change password')
             }
 
+            toast.success('Password changed')
             onClose()
         } catch (err) {
-            setError(
-                err instanceof Error ? err.message : 'Something went wrong',
-            )
+            const msg =
+                err instanceof Error ? err.message : 'Something went wrong'
+            setError(msg)
+            toast.error(msg)
         } finally {
             setIsSubmitting(false)
         }
