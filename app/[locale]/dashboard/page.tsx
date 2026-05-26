@@ -15,14 +15,12 @@ export default function DashboardPage() {
         ? {
               firstName: user.firstNames,
               lastName: user.lastNames,
-              email: user.email,
           }
         : null
 
     const handleSaveUser = async (data: {
         firstName: string
         lastName: string
-        email: string
     }) => {
         const res = await fetch('/api/users/me', {
             method: 'PUT',
@@ -30,7 +28,6 @@ export default function DashboardPage() {
             body: JSON.stringify({
                 firstNames: data.firstName,
                 lastNames: data.lastName,
-                email: data.email,
             }),
         })
         if (!res.ok) {

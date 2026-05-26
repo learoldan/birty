@@ -19,10 +19,7 @@ export default function Header() {
         ? `${user.firstNames.charAt(0)}${user.lastNames.charAt(0)}`.toUpperCase()
         : ''
 
-    const navLinks = [
-        { label: t('nav.contact'), href: '/contact' },
-        { label: t('nav.blog'), href: '/blog' },
-    ]
+    const navLinks = [{ label: t('nav.contact'), href: '/contact' }]
 
     return (
         <header className='w-full bg-transparent absolute top-0 left-0 z-50'>

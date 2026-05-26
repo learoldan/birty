@@ -7,7 +7,6 @@ import toast from 'react-hot-toast'
 type UserData = {
     firstName: string
     lastName: string
-    email: string
 }
 
 type BirthdayData = {
@@ -151,18 +150,6 @@ export default function EditModal(props: EditModalProps) {
                                     type='text'
                                     name='lastName'
                                     value={(form as UserData).lastName}
-                                    onChange={handleChange}
-                                    className={inputClass}
-                                />
-                            </div>
-                            <div className='flex flex-col gap-1'>
-                                <label className='text-sm opacity-75'>
-                                    Email
-                                </label>
-                                <input
-                                    type='email'
-                                    name='email'
-                                    value={(form as UserData).email}
                                     onChange={handleChange}
                                     className={inputClass}
                                 />
