@@ -7,7 +7,6 @@ export default function Footer() {
 
     const navLinks = [
         { label: t('nav.contact'), href: '/contact' },
-        { label: t('nav.blog'), href: '/blog' },
         { label: t('nav.login'), href: '/login' },
     ]
 

@@ -83,5 +83,27 @@
             "privacy": "Pol\u00edtica de privacidad"
         },
         "madeBy": "hecho por Leandro Rold\u00e1n"
+    },
+    "CookieBanner": {
+        "title": "Usamos cookies",
+        "description": "Usamos cookies para mejorar tu experiencia. Podés aceptarlas todas, rechazar las no esenciales o personalizar tus preferencias.",
+        "learnMore": "Más información en nuestra Política de cookies.",
+        "acceptAll": "Aceptar todas",
+        "rejectAll": "Rechazar todas",
+        "customize": "Personalizar",
+        "save": "Guardar preferencias",
+        "necessary": {
+            "label": "Necesarias",
+            "description": "Requeridas para que el sitio funcione. No se pueden desactivar.",
+            "alwaysOn": "Siempre activas"
+        },
+        "analytics": {
+            "label": "Analíticas",
+            "description": "Nos ayudan a entender cómo los usuarios usan el sitio (p. ej., Google Analytics)."
+        },
+        "marketing": {
+            "label": "Marketing",
+            "description": "Se usan para mostrar publicidad relevante y medir el rendimiento de campañas."
+        }
     }
 }

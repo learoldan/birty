@@ -7,6 +7,7 @@ import { routing } from '@/i18n/routing'
 import { AuthProvider } from '@/contexts/AuthContext'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import CookieBanner from '@/components/CookieBanner'
 import { Toaster } from 'react-hot-toast'
 import '../globals.css'
 
@@ -46,6 +47,7 @@ export default async function LocaleLayout({
                     <Header />
                     {children}
                     <Footer />
+                    <CookieBanner />
                 </AuthProvider>
             </NextIntlClientProvider>
         </div>
