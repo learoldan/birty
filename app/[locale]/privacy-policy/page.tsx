@@ -184,7 +184,7 @@ export default function PrivacyPolicyPage() {
                             )}
                             {'items' in section && (
                                 <ul className='flex flex-col gap-3 mt-2'>
-                                    {section.items.map((item) => (
+                                    {section?.items?.map((item) => (
                                         <li key={item.name}>
                                             <span className='text-sm font-medium text-terciary'>
                                                 {item.name}:{' '}
