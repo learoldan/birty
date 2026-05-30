@@ -27,8 +27,21 @@
         "email": "Correo electrónico",
         "password": "Contraseña",
         "submit": "Iniciar sesión",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
         "noAccount": "¿No tenés una cuenta?",
         "signUp": "Registrarse"
+    },
+    "ForgotPassword": {
+        "title": "Restablecer contraseña",
+        "subtitleRequest": "Ingresá tu correo y te enviaremos un código de restablecimiento.",
+        "subtitleConfirm": "Ingresá el código que recibiste y tu nueva contraseña.",
+        "email": "Correo electrónico",
+        "code": "Código de restablecimiento",
+        "newPassword": "Nueva contraseña",
+        "submitRequest": "Enviar código",
+        "submitConfirm": "Restablecer contraseña",
+        "rememberPassword": "¿Recordaste tu contraseña?",
+        "signIn": "Iniciar sesión"
     },
     "Verify": {
         "title": "Revisá tu correo",

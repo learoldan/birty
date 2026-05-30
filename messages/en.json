@@ -27,8 +27,21 @@
         "email": "Email",
         "password": "Password",
         "submit": "Sign in",
+        "forgotPassword": "Forgot password?",
         "noAccount": "Don't have an account?",
         "signUp": "Sign up"
+    },
+    "ForgotPassword": {
+        "title": "Reset password",
+        "subtitleRequest": "Enter your email and we'll send you a reset code.",
+        "subtitleConfirm": "Enter the code you received and your new password.",
+        "email": "Email",
+        "code": "Reset code",
+        "newPassword": "New password",
+        "submitRequest": "Send reset code",
+        "submitConfirm": "Reset password",
+        "rememberPassword": "Remember your password?",
+        "signIn": "Sign in"
     },
     "Verify": {
         "title": "Check your email",
